@@ -1,0 +1,261 @@
+---
+import Base from "../layouts/Base.astro";
+---
+
+<Base
+  title="Synclet — Lightweight Data Sync"
+  description="Self-hosted data synchronization. Compatible with 300+ Airbyte connectors. One binary, zero bloat."
+>
+  <!-- Nav -->
+  <nav class="fixed top-0 inset-x-0 z-50 border-b border-surface-800/60 bg-surface-950/80 backdrop-blur-lg">
+    <div class="mx-auto flex h-16 max-w-6xl items-center justify-between px-6">
+      <a href="/" class="flex items-center gap-2.5 text-white font-semibold text-lg">
+        <svg viewBox="0 0 32 32" fill="none" class="size-8" aria-hidden="true">
+          <rect width="32" height="32" rx="8" fill="#2563EB" />
+          <path d="M8 20L14 12L20 18L24 14" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" />
+          <circle cx="24" cy="14" r="2" fill="white" />
+          <circle cx="8" cy="20" r="2" fill="white" />
+        </svg>
+        Synclet
+      </a>
+      <div class="flex items-center gap-6">
+        <a href="/docs/getting-started/introduction/" class="hidden sm:block text-sm text-surface-400 hover:text-white transition-colors">Docs</a>
+        <a href="#features" class="hidden sm:block text-sm text-surface-400 hover:text-white transition-colors">Features</a>
+        <a href="#quickstart" class="hidden sm:block text-sm text-surface-400 hover:text-white transition-colors">Quick Start</a>
+        <a
+          href="https://github.com/synclet-io/synclet"
+          target="_blank"
+          rel="noopener noreferrer"
+          class="inline-flex items-center gap-2 rounded-lg bg-surface-800 px-4 py-2 text-sm font-medium text-white hover:bg-surface-700 transition-colors cursor-pointer"
+        >
+          <svg class="size-4" viewBox="0 0 16 16" fill="currentColor" aria-hidden="true">
+            <path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.01 8.01 0 0 0 16 8c0-4.42-3.58-8-8-8z" />
+          </svg>
+          GitHub
+        </a>
+      </div>
+    </div>
+  </nav>
+
+  <main>
+    <!-- Hero -->
+    <section class="relative pt-32 pb-20 sm:pt-40 sm:pb-28">
+      <div class="absolute inset-0 overflow-hidden pointer-events-none" aria-hidden="true">
+        <div class="absolute top-1/4 left-1/2 -translate-x-1/2 w-[600px] h-[400px] bg-primary-600/15 rounded-full blur-[120px]"></div>
+      </div>
+      <div class="relative mx-auto max-w-3xl px-6 text-center">
+        <div class="mb-6 inline-flex items-center gap-2 rounded-full border border-surface-700 bg-surface-900 px-4 py-1.5 text-sm text-surface-300">
+          <span class="inline-block size-2 rounded-full bg-emerald-400"></span>
+          Open Source &middot; MIT Licensed
+        </div>
+        <h1 class="text-4xl sm:text-5xl lg:text-6xl font-bold tracking-tight text-white leading-[1.1]">
+          Data sync that<br />
+          <span class="text-primary-400">just works</span>
+        </h1>
+        <p class="mt-6 text-lg sm:text-xl text-surface-400 max-w-2xl mx-auto leading-relaxed">
+          Self-hosted data synchronization platform. One Go binary, compatible with
+          <strong class="text-surface-200">300+ Airbyte connectors</strong>, built for teams that
+          value simplicity.
+        </p>
+        <div class="mt-10 flex flex-col sm:flex-row items-center justify-center gap-4">
+          <a
+            href="#quickstart"
+            class="inline-flex items-center justify-center rounded-xl bg-primary-600 px-7 py-3.5 text-sm font-semibold text-white hover:bg-primary-500 transition-colors cursor-pointer w-full sm:w-auto"
+          >
+            Get Started
+          </a>
+          <a
+            href="https://github.com/synclet-io/synclet"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="inline-flex items-center justify-center gap-2 rounded-xl border border-surface-700 bg-surface-900 px-7 py-3.5 text-sm font-semibold text-surface-200 hover:bg-surface-800 hover:border-surface-600 transition-colors cursor-pointer w-full sm:w-auto"
+          >
+            <svg class="size-4" viewBox="0 0 16 16" fill="currentColor" aria-hidden="true">
+              <path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.01 8.01 0 0 0 16 8c0-4.42-3.58-8-8-8z" />
+            </svg>
+            View on GitHub
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <!-- Features -->
+    <section id="features" class="py-20 sm:py-28">
+      <div class="mx-auto max-w-6xl px-6">
+        <div class="text-center mb-16">
+          <h2 class="text-3xl sm:text-4xl font-bold text-white">Built for the modern data stack</h2>
+          <p class="mt-4 text-surface-400 text-lg max-w-2xl mx-auto">Everything you need to move data reliably, without the overhead of enterprise platforms.</p>
+        </div>
+        <div class="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+          <!-- Feature 1 -->
+          <div class="group rounded-2xl border border-surface-800 bg-surface-900/50 p-6 hover:border-surface-700 transition-colors">
+            <div class="mb-4 inline-flex items-center justify-center size-10 rounded-lg bg-primary-600/10 text-primary-400">
+              <svg class="size-5" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M13.5 16.875h3.375m0 0h3.375m-3.375 0V13.5m0 3.375v3.375M6 10.5h2.25a2.25 2.25 0 0 0 2.25-2.25V6a2.25 2.25 0 0 0-2.25-2.25H6A2.25 2.25 0 0 0 3.75 6v2.25A2.25 2.25 0 0 0 6 10.5Zm0 9.75h2.25A2.25 2.25 0 0 0 10.5 18v-2.25a2.25 2.25 0 0 0-2.25-2.25H6a2.25 2.25 0 0 0-2.25 2.25V18A2.25 2.25 0 0 0 6 20.25Zm9.75-9.75H18a2.25 2.25 0 0 0 2.25-2.25V6A2.25 2.25 0 0 0 18 3.75h-2.25A2.25 2.25 0 0 0 13.5 6v2.25a2.25 2.25 0 0 0 2.25 2.25Z" />
+              </svg>
+            </div>
+            <h3 class="text-lg font-semibold text-white">300+ Connectors</h3>
+            <p class="mt-2 text-sm text-surface-400 leading-relaxed">Drop-in compatible with the Airbyte connector ecosystem. MySQL, Postgres, BigQuery, Snowflake, Sheets, and hundreds more.</p>
+          </div>
+          <!-- Feature 2 -->
+          <div class="group rounded-2xl border border-surface-800 bg-surface-900/50 p-6 hover:border-surface-700 transition-colors">
+            <div class="mb-4 inline-flex items-center justify-center size-10 rounded-lg bg-emerald-600/10 text-emerald-400">
+              <svg class="size-5" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true">
+                <path stroke-linecap="round" stroke-linejoin="round" d="m3.75 13.5 10.5-11.25L12 10.5h8.25L9.75 21.75 12 13.5H3.75Z" />
+              </svg>
+            </div>
+            <h3 class="text-lg font-semibold text-white">Single Binary</h3>
+            <p class="mt-2 text-sm text-surface-400 leading-relaxed">One Go binary. No JVM, no Kubernetes required. Run on a $5 VPS or scale to distributed K8s orchestration.</p>
+          </div>
+          <!-- Feature 3 -->
+          <div class="group rounded-2xl border border-surface-800 bg-surface-900/50 p-6 hover:border-surface-700 transition-colors">
+            <div class="mb-4 inline-flex items-center justify-center size-10 rounded-lg bg-violet-600/10 text-violet-400">
+              <svg class="size-5" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M16.5 10.5V6.75a4.5 4.5 0 1 0-9 0v3.75m-.75 11.25h10.5a2.25 2.25 0 0 0 2.25-2.25v-6.75a2.25 2.25 0 0 0-2.25-2.25H6.75a2.25 2.25 0 0 0-2.25 2.25v6.75a2.25 2.25 0 0 0 2.25 2.25Z" />
+              </svg>
+            </div>
+            <h3 class="text-lg font-semibold text-white">Self-Hosted</h3>
+            <p class="mt-2 text-sm text-surface-400 leading-relaxed">Your data never leaves your infrastructure. AES-256 encrypted secrets, OIDC SSO, and workspace-level isolation.</p>
+          </div>
+          <!-- Feature 4 -->
+          <div class="group rounded-2xl border border-surface-800 bg-surface-900/50 p-6 hover:border-surface-700 transition-colors">
+            <div class="mb-4 inline-flex items-center justify-center size-10 rounded-lg bg-amber-600/10 text-amber-400">
+              <svg class="size-5" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M12 6v6h4.5m4.5 0a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
+              </svg>
+            </div>
+            <h3 class="text-lg font-semibold text-white">Incremental Sync</h3>
+            <p class="mt-2 text-sm text-surface-400 leading-relaxed">Cron-based scheduling with state tracking. Only sync what changed — save bandwidth and compute.</p>
+          </div>
+          <!-- Feature 5 -->
+          <div class="group rounded-2xl border border-surface-800 bg-surface-900/50 p-6 hover:border-surface-700 transition-colors">
+            <div class="mb-4 inline-flex items-center justify-center size-10 rounded-lg bg-rose-600/10 text-rose-400">
+              <svg class="size-5" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M14.857 17.082a23.848 23.848 0 0 0 5.454-1.31A8.967 8.967 0 0 1 18 9.75V9A6 6 0 0 0 6 9v.75a8.967 8.967 0 0 1-2.312 6.022c1.733.64 3.56 1.085 5.455 1.31m5.714 0a24.255 24.255 0 0 1-5.714 0m5.714 0a3 3 0 1 1-5.714 0" />
+              </svg>
+            </div>
+            <h3 class="text-lg font-semibold text-white">Alerting</h3>
+            <p class="mt-2 text-sm text-surface-400 leading-relaxed">Get notified when syncs fail. Slack, email, Telegram, and webhooks out of the box.</p>
+          </div>
+          <!-- Feature 6 -->
+          <div class="group rounded-2xl border border-surface-800 bg-surface-900/50 p-6 hover:border-surface-700 transition-colors">
+            <div class="mb-4 inline-flex items-center justify-center size-10 rounded-lg bg-cyan-600/10 text-cyan-400">
+              <svg class="size-5" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M3.75 3v11.25A2.25 2.25 0 0 0 6 16.5h2.25M3.75 3h-1.5m1.5 0h16.5m0 0h1.5m-1.5 0v11.25A2.25 2.25 0 0 1 18 16.5h-2.25m-7.5 0h7.5m-7.5 0-1 3m8.5-3 1 3m0 0 .5 1.5m-.5-1.5h-9.5m0 0-.5 1.5M9 11.25v1.5M12 9v3.75m3-6v6" />
+              </svg>
+            </div>
+            <h3 class="text-lg font-semibold text-white">Full Observability</h3>
+            <p class="mt-2 text-sm text-surface-400 leading-relaxed">Dashboard with connection health, sync history, record counts, and detailed logs. Prometheus-compatible.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- How it works -->
+    <section class="py-20 sm:py-28 border-y border-surface-800/60">
+      <div class="mx-auto max-w-6xl px-6">
+        <div class="text-center mb-16">
+          <h2 class="text-3xl sm:text-4xl font-bold text-white">Three steps to flowing data</h2>
+        </div>
+        <div class="grid gap-8 sm:grid-cols-3">
+          <div class="text-center">
+            <div class="mx-auto mb-5 flex size-12 items-center justify-center rounded-full bg-primary-600/10 text-primary-400 text-lg font-bold ring-1 ring-primary-600/30">1</div>
+            <h3 class="text-lg font-semibold text-white">Configure Source</h3>
+            <p class="mt-2 text-sm text-surface-400">Pick from 300+ connectors. Credentials are tested and encrypted at rest.</p>
+          </div>
+          <div class="text-center">
+            <div class="mx-auto mb-5 flex size-12 items-center justify-center rounded-full bg-primary-600/10 text-primary-400 text-lg font-bold ring-1 ring-primary-600/30">2</div>
+            <h3 class="text-lg font-semibold text-white">Pick Destination</h3>
+            <p class="mt-2 text-sm text-surface-400">BigQuery, Snowflake, Postgres, Google Sheets, or any Airbyte destination.</p>
+          </div>
+          <div class="text-center">
+            <div class="mx-auto mb-5 flex size-12 items-center justify-center rounded-full bg-primary-600/10 text-primary-400 text-lg font-bold ring-1 ring-primary-600/30">3</div>
+            <h3 class="text-lg font-semibold text-white">Schedule & Run</h3>
+            <p class="mt-2 text-sm text-surface-400">Set a cron schedule or trigger manually. Synclet handles the rest.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Quick Start -->
+    <section id="quickstart" class="py-20 sm:py-28">
+      <div class="mx-auto max-w-3xl px-6">
+        <div class="text-center mb-12">
+          <h2 class="text-3xl sm:text-4xl font-bold text-white">Up and running in 60 seconds</h2>
+          <p class="mt-4 text-surface-400 text-lg">Docker Compose is all you need.</p>
+        </div>
+        <div class="rounded-2xl border border-surface-800 bg-surface-900 overflow-hidden">
+          <div class="flex items-center gap-2 border-b border-surface-800 px-5 py-3">
+            <span class="size-3 rounded-full bg-surface-700"></span>
+            <span class="size-3 rounded-full bg-surface-700"></span>
+            <span class="size-3 rounded-full bg-surface-700"></span>
+            <span class="ml-3 text-xs text-surface-500 font-mono">terminal</span>
+          </div>
+          <div class="p-5 font-mono text-sm leading-relaxed overflow-x-auto">
+            <p class="text-surface-500"># Clone and start</p>
+            <p><span class="text-emerald-400">$</span> <span class="text-surface-200">git clone https://github.com/synclet-io/synclet.git</span></p>
+            <p><span class="text-emerald-400">$</span> <span class="text-surface-200">cd synclet</span></p>
+            <p><span class="text-emerald-400">$</span> <span class="text-surface-200">docker compose up -d</span></p>
+            <p class="mt-3 text-surface-500"># Open the dashboard</p>
+            <p><span class="text-emerald-400">$</span> <span class="text-surface-200">open http://localhost:8080</span></p>
+          </div>
+        </div>
+        <p class="mt-6 text-center text-sm text-surface-500">
+          Or download the <a href="https://github.com/synclet-io/synclet/releases" target="_blank" rel="noopener noreferrer" class="text-primary-400 hover:text-primary-300 underline underline-offset-2">pre-built binary</a> and run standalone.
+        </p>
+      </div>
+    </section>
+
+    <!-- Airbyte compat callout -->
+    <section class="py-20 sm:py-28 border-t border-surface-800/60">
+      <div class="mx-auto max-w-4xl px-6 text-center">
+        <h2 class="text-3xl sm:text-4xl font-bold text-white">
+          Full Airbyte protocol compatibility
+        </h2>
+        <p class="mt-6 text-lg text-surface-400 max-w-2xl mx-auto leading-relaxed">
+          Synclet implements the Airbyte connector protocol natively. Use any Docker-based Airbyte
+          source or destination — no forks, no patches. Plus built-in native Go connectors for
+          extra performance.
+        </p>
+        <div class="mt-10 flex flex-wrap items-center justify-center gap-x-8 gap-y-4 text-surface-500">
+          <span class="flex items-center gap-2 text-sm">
+            <svg class="size-4 text-emerald-400" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="m4.5 12.75 6 6 9-13.5" /></svg>
+            MySQL
+          </span>
+          <span class="flex items-center gap-2 text-sm">
+            <svg class="size-4 text-emerald-400" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="m4.5 12.75 6 6 9-13.5" /></svg>
+            PostgreSQL
+          </span>
+          <span class="flex items-center gap-2 text-sm">
+            <svg class="size-4 text-emerald-400" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="m4.5 12.75 6 6 9-13.5" /></svg>
+            BigQuery
+          </span>
+          <span class="flex items-center gap-2 text-sm">
+            <svg class="size-4 text-emerald-400" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="m4.5 12.75 6 6 9-13.5" /></svg>
+            Snowflake
+          </span>
+          <span class="flex items-center gap-2 text-sm">
+            <svg class="size-4 text-emerald-400" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="m4.5 12.75 6 6 9-13.5" /></svg>
+            Google Sheets
+          </span>
+          <span class="flex items-center gap-2 text-sm">
+            <svg class="size-4 text-emerald-400" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="m4.5 12.75 6 6 9-13.5" /></svg>
+            300+ more
+          </span>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- Footer -->
+  <footer class="border-t border-surface-800/60 py-10">
+    <div class="mx-auto max-w-6xl px-6 flex flex-col sm:flex-row items-center justify-between gap-4">
+      <p class="text-sm text-surface-500">&copy; 2026 Synclet. MIT License.</p>
+      <div class="flex items-center gap-6">
+        <a href="https://github.com/synclet-io/synclet" target="_blank" rel="noopener noreferrer" class="text-sm text-surface-500 hover:text-surface-300 transition-colors">GitHub</a>
+        <a href="https://github.com/synclet-io/synclet/issues" target="_blank" rel="noopener noreferrer" class="text-sm text-surface-500 hover:text-surface-300 transition-colors">Issues</a>
+        <a href="https://github.com/synclet-io/synclet/releases" target="_blank" rel="noopener noreferrer" class="text-sm text-surface-500 hover:text-surface-300 transition-colors">Releases</a>
+      </div>
+    </div>
+  </footer>
+</Base>
