@@ -19,7 +19,7 @@ import Base from "../layouts/Base.astro";
         Synclet
       </a>
       <div class="flex items-center gap-6">
-        <a href="/docs/getting-started/introduction/" class="hidden sm:block text-sm text-surface-400 hover:text-white transition-colors">Docs</a>
+        <a href={`${import.meta.env.BASE_URL}docs/getting-started/introduction/`} class="hidden sm:block text-sm text-surface-400 hover:text-white transition-colors">Docs</a>
         <a href="#features" class="hidden sm:block text-sm text-surface-400 hover:text-white transition-colors">Features</a>
         <a href="#quickstart" class="hidden sm:block text-sm text-surface-400 hover:text-white transition-colors">Quick Start</a>
         <a
