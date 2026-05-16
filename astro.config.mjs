@@ -3,18 +3,22 @@ import { defineConfig } from 'astro/config';
 import starlight from '@astrojs/starlight';
 import tailwindcss from '@tailwindcss/vite';
 
+const BASE = '/synclet-site';
+
 // https://astro.build/config
 export default defineConfig({
   site: 'https://synclet-io.github.io',
-  base: '/synclet-site',
+  base: BASE,
   integrations: [
     starlight({
       title: 'Synclet Docs',
+      // Use the compact square mark for the docs nav. The full README hero
+      // logo would shrink to an illegible postage stamp here. Starlight
+      // shows the configured title next to the mark.
       logo: {
-        light: './public/synclet-logo-light.svg',
-        dark: './public/synclet-logo.svg',
-        replacesTitle: true,
+        src: './public/favicon.svg',
       },
+      // Starlight auto-prefixes the configured base.
       favicon: '/favicon.svg',
       social: [
         { icon: 'github', label: 'GitHub', href: 'https://github.com/synclet-io/synclet' },

@@ -9,13 +9,8 @@ import Base from "../layouts/Base.astro";
   <!-- Nav -->
   <nav class="fixed top-0 inset-x-0 z-50 border-b border-surface-800/60 bg-surface-950/80 backdrop-blur-lg">
     <div class="mx-auto flex h-16 max-w-6xl items-center justify-between px-6">
-      <a href="/" class="flex items-center gap-2.5 text-white font-semibold text-lg">
-        <svg viewBox="0 0 32 32" fill="none" class="size-8" aria-hidden="true">
-          <rect width="32" height="32" rx="8" fill="#2563EB" />
-          <path d="M8 20L14 12L20 18L24 14" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" />
-          <circle cx="24" cy="14" r="2" fill="white" />
-          <circle cx="8" cy="20" r="2" fill="white" />
-        </svg>
+      <a href={import.meta.env.BASE_URL} class="flex items-center gap-2.5 text-white font-semibold text-lg">
+        <img src={`${import.meta.env.BASE_URL}/favicon.svg`} alt="Synclet" class="size-8 rounded-lg" />
         Synclet
       </a>
       <div class="flex items-center gap-6">
