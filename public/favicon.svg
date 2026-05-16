@@ -1,6 +1,8 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" fill="none">
-  <rect width="32" height="32" rx="8" fill="#2563EB"/>
-  <path d="M8 20L14 12L20 18L24 14" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
-  <circle cx="24" cy="14" r="2" fill="white"/>
-  <circle cx="8" cy="20" r="2" fill="white"/>
+<svg viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg">
+  <rect width="64" height="64" rx="14" fill="#181e30"/>
+  <path d="M 14 29 L 10 28 A 22 22 0 0 1 53 25 L 52 29 L 49 26 A 18 18 0 0 0 14 29 Z" fill="#4e8cff"/>
+  <circle cx="12" cy="28" r="2.2" fill="#4e8cff"/>
+  <path d="M 50 35 L 54 36 A 22 22 0 0 1 11 38 L 12 36 L 15 37 A 18 18 0 0 0 50 35 Z" fill="#22d3a0"/>
+  <circle cx="52" cy="36" r="2.2" fill="#22d3a0"/>
+  <text x="32" y="32" text-anchor="middle" dominant-baseline="central" font-family="system-ui,-apple-system,sans-serif" font-size="20" font-weight="700" fill="#ffffff">S</text>
 </svg>

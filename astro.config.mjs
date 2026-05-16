@@ -10,6 +10,12 @@ export default defineConfig({
   integrations: [
     starlight({
       title: 'Synclet Docs',
+      logo: {
+        light: './public/synclet-logo-light.svg',
+        dark: './public/synclet-logo.svg',
+        replacesTitle: true,
+      },
+      favicon: '/favicon.svg',
       social: [
         { icon: 'github', label: 'GitHub', href: 'https://github.com/synclet-io/synclet' },
       ],

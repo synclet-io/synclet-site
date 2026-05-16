@@ -1,0 +1,22 @@
+<svg width="680" height="680" viewBox="0 0 680 680" xmlns="http://www.w3.org/2000/svg">
+  <rect width="680" height="680" rx="80" fill="#f0f4ff"/>
+  <circle cx="340" cy="265" r="152" fill="none" stroke="#c8d4ef" stroke-width="1.5" stroke-dasharray="5 7"/>
+  <circle cx="340" cy="265" r="85" fill="none" stroke="#c8d4ef" stroke-width="1.5" stroke-dasharray="5 7"/>
+  <line x1="340" y1="265" x2="340" y2="155" stroke="#c8d4ef" stroke-width="2" stroke-dasharray="4 5"/>
+  <line x1="340" y1="265" x2="435" y2="320" stroke="#c8d4ef" stroke-width="2" stroke-dasharray="4 5"/>
+  <line x1="340" y1="265" x2="245" y2="320" stroke="#c8d4ef" stroke-width="2" stroke-dasharray="4 5"/>
+  <circle cx="340" cy="265" r="22" fill="#e4eafc" stroke="#a0b0d8" stroke-width="2"/>
+  <circle cx="340" cy="265" r="9" fill="#7c5cdb"/>
+  <path d="M 200 238 L 186 235 A 157 157 0 0 1 491 222 L 488 239 L 477 226 A 143 143 0 0 0 200 238 Z" fill="#2970f0"/>
+  <circle cx="193" cy="236" r="7" fill="#2970f0"/>
+  <path d="M 480 292 L 494 295 A 157 157 0 0 1 189 308 L 192 291 L 203 304 A 143 143 0 0 0 480 292 Z" fill="#0db888"/>
+  <circle cx="487" cy="294" r="7" fill="#0db888"/>
+  <circle cx="340" cy="155" r="20" fill="#f0f4ff" stroke="#2970f0" stroke-width="5"/>
+  <circle cx="340" cy="155" r="8" fill="#2970f0"/>
+  <circle cx="435" cy="320" r="20" fill="#f0f4ff" stroke="#0db888" stroke-width="5"/>
+  <circle cx="435" cy="320" r="8" fill="#0db888"/>
+  <circle cx="245" cy="320" r="20" fill="#f0f4ff" stroke="#7c5cdb" stroke-width="5"/>
+  <circle cx="245" cy="320" r="8" fill="#7c5cdb"/>
+  <text x="340" y="542" text-anchor="middle" font-family="system-ui,-apple-system,sans-serif" font-size="50" font-weight="700" fill="#111a35" letter-spacing="-1">synclet</text>
+  <text x="340" y="574" text-anchor="middle" font-family="system-ui,-apple-system,sans-serif" font-size="19" font-weight="400" fill="#7a8aaa" letter-spacing="3">DATA SYNC PLATFORM</text>
+</svg>
