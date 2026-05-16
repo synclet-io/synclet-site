@@ -26,56 +26,60 @@ OIDC setup requires two steps: (1) list the providers you want to enable, and (2
 
 **Step 1: Declare providers**
 
-Set `OIDC_PROVIDERS` to a comma-separated list of provider slugs, and `OIDC_CALLBACK_BASE_URL` to your public Synclet URL:
+Set `AUTH_OIDC_PROVIDERS` to a comma-separated list of provider slugs, and `AUTH_OIDC_CALLBACK_BASE_URL` to your public Synclet URL:
 
 ```bash
-OIDC_PROVIDERS="google,okta"
-OIDC_CALLBACK_BASE_URL="https://synclet.example.com"
+AUTH_OIDC_PROVIDERS="google,okta"
+AUTH_OIDC_CALLBACK_BASE_URL="https://synclet.example.com"
 ```
 
 **Step 2: Configure each provider**
 
-For each slug listed in `OIDC_PROVIDERS`, set the following environment variables (replace `<SLUG>` with the uppercase slug):
+For each slug listed in `AUTH_OIDC_PROVIDERS`, set the following environment variables (replace `<SLUG>` with the uppercase slug):
 
 | Variable | Description | Required |
 |---|---|---|
-| `OIDC_<SLUG>_ISSUER` | The OIDC issuer URL | Yes |
-| `OIDC_<SLUG>_CLIENT_ID` | OAuth 2.0 client ID | Yes |
-| `OIDC_<SLUG>_CLIENT_SECRET` | OAuth 2.0 client secret | Yes |
-| `OIDC_<SLUG>_DISPLAY_NAME` | Button label on login page | No (defaults to slug) |
-| `OIDC_<SLUG>_SCOPES` | Comma-separated scopes | No (defaults to `openid,profile,email`) |
-| `OIDC_<SLUG>_ALLOWED_DOMAINS` | Restrict to email domains | No |
-| `OIDC_<SLUG>_AUTO_CREATE_USER` | Create user on first login | No (defaults to `true`) |
-| `OIDC_<SLUG>_DEFAULT_ROLE` | Role for new OIDC users | No (defaults to `viewer`) |
+| `AUTH_OIDC_<SLUG>_ISSUER` | The OIDC issuer URL | Yes |
+| `AUTH_OIDC_<SLUG>_CLIENT_ID` | OAuth 2.0 client ID | Yes |
+| `AUTH_OIDC_<SLUG>_CLIENT_SECRET` | OAuth 2.0 client secret | Yes |
+| `AUTH_OIDC_<SLUG>_DISPLAY_NAME` | Button label on login page | No (defaults to slug) |
+| `AUTH_OIDC_<SLUG>_SCOPES` | Comma-separated scopes | No (defaults to `openid,profile,email`) |
+| `AUTH_OIDC_<SLUG>_ALLOWED_DOMAINS` | Restrict to email domains | No |
+| `AUTH_OIDC_<SLUG>_AUTO_CREATE_USER` | Create user on first login | No (defaults to `true`) |
+| `AUTH_OIDC_<SLUG>_DEFAULT_ROLE` | Role for new OIDC users | No (defaults to `viewer`) |
+| `AUTH_OIDC_<SLUG>_ROLE_CLAIM` | Claim to use for role mapping | No |
+| `AUTH_OIDC_<SLUG>_ROLE_MAP_ADMIN` | Claim value → Admin role | No |
+| `AUTH_OIDC_<SLUG>_ROLE_MAP_EDITOR` | Claim value → Editor role | No |
+| `AUTH_OIDC_<SLUG>_ROLE_MAP_VIEWER` | Claim value → Viewer role | No |
 
 ### Example: Google
 
 ```bash
-OIDC_PROVIDERS="google"
-OIDC_CALLBACK_BASE_URL="https://synclet.example.com"
-OIDC_GOOGLE_ISSUER="https://accounts.google.com"
-OIDC_GOOGLE_CLIENT_ID="123456789.apps.googleusercontent.com"
-OIDC_GOOGLE_CLIENT_SECRET="GOCSPX-xxxxxxxxxxxxxxxx"
-OIDC_GOOGLE_DISPLAY_NAME="Google"
-OIDC_GOOGLE_ALLOWED_DOMAINS="yourcompany.com"
+AUTH_OIDC_PROVIDERS="google"
+AUTH_OIDC_CALLBACK_BASE_URL="https://synclet.example.com"
+AUTH_OIDC_GOOGLE_ISSUER="https://accounts.google.com"
+AUTH_OIDC_GOOGLE_CLIENT_ID="123456789.apps.googleusercontent.com"
+AUTH_OIDC_GOOGLE_CLIENT_SECRET="GOCSPX-xxxxxxxxxxxxxxxx"
+AUTH_OIDC_GOOGLE_DISPLAY_NAME="Google"
+AUTH_OIDC_GOOGLE_ALLOWED_DOMAINS="yourcompany.com"
 ```
 
 ### Example: Multiple providers (Google + Okta)
 
 ```bash
-OIDC_PROVIDERS="google,okta"
-OIDC_CALLBACK_BASE_URL="https://synclet.example.com"
+AUTH_OIDC_PROVIDERS="google,okta"
+AUTH_OIDC_CALLBACK_BASE_URL="https://synclet.example.com"
 
 # Google
-OIDC_GOOGLE_ISSUER="https://accounts.google.com"
-OIDC_GOOGLE_CLIENT_ID="123456789.apps.googleusercontent.com"
-OIDC_GOOGLE_CLIENT_SECRET="GOCSPX-xxxxxxxxxxxxxxxx"
+AUTH_OIDC_GOOGLE_ISSUER="https://accounts.google.com"
+AUTH_OIDC_GOOGLE_CLIENT_ID="123456789.apps.googleusercontent.com"
+AUTH_OIDC_GOOGLE_CLIENT_SECRET="GOCSPX-xxxxxxxxxxxxxxxx"
 
 # Okta
-OIDC_OKTA_ISSUER="https://your-org.okta.com"
-OIDC_OKTA_CLIENT_ID="0oaXXXXXXXXXXXXXXX"
-OIDC_OKTA_CLIENT_SECRET="your-client-secret"
-OIDC_OKTA_DISPLAY_NAME="Company SSO"
+AUTH_OIDC_OKTA_ISSUER="https://your-org.okta.com"
+AUTH_OIDC_OKTA_CLIENT_ID="0oaXXXXXXXXXXXXXXX"
+AUTH_OIDC_OKTA_CLIENT_SECRET="your-client-secret"
+AUTH_OIDC_OKTA_DISPLAY_NAME="Company SSO"
 ```
 
 When OIDC is configured, a **Sign in with ...** button appears on the login page for each provider. Users who sign in through OIDC for the first time have an account created automatically (unless `AUTO_CREATE_USER` is set to `false`).
@@ -85,7 +89,7 @@ When OIDC is configured, a **Sign in with ...** button appears on the login page
 Once your team is onboarded, you can prevent new sign-ups by setting:
 
 ```bash
-REGISTRATION_ENABLED=false
+AUTH_REGISTRATION_ENABLED=false
 ```
 
 This blocks new email/password registrations. Existing users and OIDC logins are not affected — users who authenticate through an OIDC provider can still sign in and have accounts created on first login.
@@ -126,10 +130,10 @@ API keys have the same permissions as the role of the user who created them with
 
 Synclet uses cookie-based sessions for authentication.
 
-- **Access token cookie** (`synclet_at`) is short-lived (15 minutes) and sent automatically with every request from the web UI. It is `HttpOnly` and not accessible to JavaScript.
+- **Access token cookie** (`synclet_at`) is short-lived (15 minutes by default, configurable via `AUTH_ACCESS_TOKEN_TTL`) and sent automatically with every request from the web UI. It is `HttpOnly` and not accessible to JavaScript.
 - **Refresh token cookie** (`synclet_rt`) allows the browser to obtain new access tokens without re-entering credentials.
 - A **metadata cookie** (`synclet_auth`) is readable by JavaScript and contains token expiration timestamps so the frontend can proactively refresh tokens.
-- Sessions persist across browser restarts until the refresh token expires (7 days by default) or is revoked.
+- Sessions persist across browser restarts until the refresh token expires (7 days by default, configurable via `AUTH_REFRESH_TOKEN_TTL`) or is revoked.
 
 To log out, click your avatar in the top-right corner and select **Log out**. This clears your session cookies and invalidates the refresh token.
 

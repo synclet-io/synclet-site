@@ -34,7 +34,7 @@ Yes. Any Docker image that implements the [Airbyte connector protocol](https://d
 
 ### How are credentials stored?
 
-All connector credentials (database passwords, API keys, OAuth tokens) are encrypted at rest using **AES-256-GCM**. The encryption key is your `SECRET_ENCRYPTION_KEY` environment variable. Without this key, stored credentials cannot be decrypted.
+All connector credentials (database passwords, API keys, OAuth tokens) are encrypted at rest using **AES-256-GCM**. The encryption key is your `ENCRYPTION_KEY` environment variable. Without this key, stored credentials cannot be decrypted.
 
 See [Environment Variables](/docs/reference/environment-variables/) for how to generate a secure key.
 
@@ -46,7 +46,7 @@ Data between Synclet and your sources/destinations travels over whatever connect
 
 ### How do I control access?
 
-- **Disable registration** -- Set `REGISTRATION_ENABLED=false` after creating your initial accounts.
+- **Disable registration** -- Set `AUTH_REGISTRATION_ENABLED=false` after creating your initial accounts.
 - **OIDC single sign-on** -- Configure one or more OIDC providers (Google, Okta, Azure AD) so users authenticate through your identity provider. See [Environment Variables](/docs/reference/environment-variables/).
 - **Role-based access** -- Synclet supports workspace-level roles to control who can create, edit, or run pipelines.
 

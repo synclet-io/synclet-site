@@ -28,14 +28,14 @@ Once the containers are healthy, open the dashboard at **http://localhost:8080**
 | Variable | Purpose | Default |
 |---|---|---|
 | `DSN` | PostgreSQL connection string | Set by Compose |
-| `JWT_SECRET` | Token signing key | *must set* |
+| `AUTH_JWT_SECRET` | Token signing key | *must set* |
 | `ENCRYPTION_KEY` | Base64-encoded 32-byte key for credentials | *must set* |
 | `HTTP_SERVER_ADDR` | HTTP listen address | `0.0.0.0:8080` |
 
 Generate secrets before first start:
 
 ```bash
-# JWT_SECRET
+# AUTH_JWT_SECRET
 openssl rand -base64 32
 
 # ENCRYPTION_KEY (must be exactly 32 bytes, base64-encoded)
@@ -56,7 +56,7 @@ docker run -d \
   -p 8080:8080 \
   -e DSN="postgres://synclet:password@host.docker.internal:5432/synclet?sslmode=disable" \
   -e HTTP_SERVER_ADDR="0.0.0.0:8080" \
-  -e JWT_SECRET="$(openssl rand -base64 32)" \
+  -e AUTH_JWT_SECRET="$(openssl rand -base64 32)" \
   -e ENCRYPTION_KEY="$(openssl rand -base64 32)" \
   -v /var/run/docker.sock:/var/run/docker.sock \
   synclet server --standalone
@@ -81,7 +81,7 @@ You can run Synclet as a plain binary without Docker.
 ```bash
 export DSN="postgres://synclet:password@localhost:5432/synclet?sslmode=disable"
 export HTTP_SERVER_ADDR="0.0.0.0:8080"
-export JWT_SECRET="your-jwt-secret"
+export AUTH_JWT_SECRET="your-jwt-secret"
 export ENCRYPTION_KEY="your-encryption-key"
 
 synclet migrate up

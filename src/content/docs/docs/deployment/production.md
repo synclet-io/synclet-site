@@ -13,7 +13,7 @@ Generate cryptographically secure secrets. Never use default or weak values.
 
 ```bash
 # JWT signing key
-export JWT_SECRET="$(openssl rand -base64 32)"
+export AUTH_JWT_SECRET="$(openssl rand -base64 32)"
 
 # AES-256 encryption key for stored credentials (must be 32 bytes, base64-encoded)
 export ENCRYPTION_KEY="$(openssl rand -base64 32)"
@@ -34,12 +34,12 @@ Always terminate TLS in front of Synclet. Options:
 After creating your admin account, disable public registration:
 
 ```bash
-export REGISTRATION_ENABLED="false"
+export AUTH_REGISTRATION_ENABLED="false"
 ```
 
 ### OIDC single sign-on
 
-For teams, configure an OIDC provider (Google, Okta, etc.) instead of local passwords. See [Environment Variables](/docs/reference/environment-variables/) for the `OIDC_PROVIDER_*` settings.
+For teams, configure an OIDC provider (Google, Okta, etc.) instead of local passwords. See [Environment Variables](/docs/reference/environment-variables/) for the `AUTH_OIDC_*` settings.
 
 ### Container network isolation
 
@@ -116,10 +116,10 @@ Automate all of the above and **test restores regularly**. A backup you have nev
 
 | Variable | Description | Default | Guidance |
 |---|---|---|---|
-| `WORKER_INTERVAL` | How often workers poll for new jobs | `1s` | Lower = faster pickup, higher CPU. 1-5 s is typical. |
-| `SCHEDULER_INTERVAL` | How often the scheduler evaluates cron triggers | `30s` | 15-60 s depending on schedule granularity. |
-| `MAX_SYNC_DURATION` | Hard timeout for a single sync | `24h` | Set based on your largest dataset. |
-| `IDLE_TIMEOUT` | Kill a sync if no data flows for this long | `10m` | Increase for slow sources. |
+| `PIPELINE_JOB_WORKER_INTERVAL` | How often workers poll for new jobs | `1s` | Lower = faster pickup, higher CPU. 1-5 s is typical. |
+| `PIPELINE_JOB_SCHEDULER_INTERVAL` | How often the scheduler evaluates cron triggers | `30s` | 15-60 s depending on schedule granularity. |
+| `PIPELINE_MAX_SYNC_DURATION` | Hard timeout for a single sync | `24h` | Set based on your largest dataset. |
+| `PIPELINE_IDLE_TIMEOUT` | Kill a sync if no data flows for this long | `10m` | Increase for slow sources. |
 
 ### Container resource limits
 

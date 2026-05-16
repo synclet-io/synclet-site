@@ -67,9 +67,9 @@ Database migrations did not complete successfully.
 
 A sync Job was created but its pod never started.
 
-- **Namespace** -- Verify `K8S_NAMESPACE` matches an existing namespace. Check with `kubectl get ns`.
-- **Service account** -- If `PIPELINE_DEFAULT_SERVICE_ACCOUNT_NAME` is set, confirm the service account exists: `kubectl get sa -n <namespace>`.
-- **Image pull secrets** -- If connectors are in a private registry, set `K8S_IMAGE_PULL_SECRET` and verify the secret exists: `kubectl get secret -n <namespace>`.
+- **Namespace** -- Verify `K8S_EXECUTOR_NAMESPACE` matches an existing namespace. Check with `kubectl get ns`.
+- **Service account** -- If `PIPELINE_RUNTIME_SERVICE_ACCOUNT_NAME` is set, confirm the service account exists: `kubectl get sa -n <namespace>`.
+- **Image pull secrets** -- If connectors are in a private registry, set `K8S_EXECUTOR_IMAGE_PULL_SECRET` and verify the secret exists: `kubectl get secret -n <namespace>`.
 - **Pod events** -- Check why the pod is pending:
 
 ```bash

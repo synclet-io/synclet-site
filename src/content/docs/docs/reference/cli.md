@@ -18,6 +18,7 @@ Synclet is distributed as a single binary. All operations — running the server
 | `synclet migrate down` | Roll back the last applied migration. |
 | `synclet migrate status` | Show migration status. |
 | `synclet migrate create <module> <name>` | Create a new migration file. |
+| `synclet generate dotenv` | Generate a `.env` file with all available environment variables and their defaults. |
 
 ## Global Flags
 
@@ -33,8 +34,8 @@ Synclet is distributed as a single binary. All operations — running the server
 ```bash
 # Start in standalone mode (API + jobs + executor in one process)
 DB_DSN=postgres://user:pass@localhost:5432/synclet \
-JWT_SECRET=your-secret \
-SECRET_ENCRYPTION_KEY=your-base64-key \
+AUTH_JWT_SECRET=your-secret \
+ENCRYPTION_KEY=your-base64-key \
 synclet server --standalone
 
 # Load config from a .env file
@@ -86,3 +87,18 @@ synclet migrate create auth add_api_tokens
 The `--module` flag can be used with `up`, `down`, and `status` to target a specific module.
 
 Migrations are idempotent — running `migrate up` on an already up-to-date database is a no-op.
+
+## Generate
+
+### `synclet generate dotenv`
+
+Generates a `.env` file containing all available environment variables with their default values. If a `.env` file already exists, new variables are appended without overwriting existing values.
+
+Aliases: `synclet gen dotenv`, `synclet generate env`
+
+```bash
+# Generate a .env file with all variables
+synclet generate dotenv
+```
+
+This is useful when setting up a new environment or after upgrading to discover newly added configuration options.

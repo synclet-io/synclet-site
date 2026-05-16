@@ -80,7 +80,7 @@ chmod +x synclet
 
 # Set required environment variables
 export DSN="postgres://user:password@localhost:5432/synclet?sslmode=disable"
-export JWT_SECRET="$(openssl rand -hex 32)"
+export AUTH_JWT_SECRET="$(openssl rand -base64 32)"
 export ENCRYPTION_KEY="$(openssl rand -base64 32)"
 
 # Run migrations and start the server

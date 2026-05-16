@@ -80,7 +80,7 @@ If a sync fails mid-way, no data is lost. The next attempt resumes from the **la
 
 ### Credential Encryption
 
-All connector credentials (database passwords, API keys, OAuth tokens) are encrypted at rest using **AES-256-GCM**. The encryption key is configured via the `SECRET_ENCRYPTION_KEY` environment variable and never stored in the database. See [Configuration](/docs/getting-started/configuration/) for details.
+All connector credentials (database passwords, API keys, OAuth tokens) are encrypted at rest using **AES-256-GCM**. The encryption key is configured via the `ENCRYPTION_KEY` environment variable and never stored in the database. See [Configuration](/docs/getting-started/configuration/) for details.
 
 ### Container Isolation
 

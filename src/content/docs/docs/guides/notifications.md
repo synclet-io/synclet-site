@@ -44,11 +44,11 @@ Synclet sends email notifications through your SMTP server.
 First, configure the SMTP server using environment variables:
 
 ```bash
-SMTP_HOST="smtp.gmail.com"
-SMTP_PORT="587"
-SMTP_USER="alerts@yourcompany.com"
-SMTP_PASSWORD="your-app-password"
-SMTP_FROM="noreply@yourcompany.com"
+NOTIFY_SMTP_HOST="smtp.gmail.com"
+NOTIFY_SMTP_PORT="587"
+NOTIFY_SMTP_USER="alerts@yourcompany.com"
+NOTIFY_SMTP_PASSWORD="your-app-password"
+NOTIFY_SMTP_FROM="noreply@yourcompany.com"
 ```
 
 Then create an email notification channel:
