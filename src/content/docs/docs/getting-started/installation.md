@@ -36,25 +36,27 @@ Open your browser and navigate to [http://localhost:8080](http://localhost:8080)
 
 ## Pre-built Binary
 
-Download a pre-compiled binary from the [GitHub Releases](https://github.com/synclet-io/synclet/releases) page and run it directly.
+Download a pre-compiled archive from the [GitHub Releases](https://github.com/synclet-io/synclet/releases) page. Each release tag is named `synclet-v<version>` and publishes archives for `linux/amd64`, `linux/arm64`, `darwin/amd64`, `darwin/arm64`, and `windows/amd64`, plus an aggregated `SHA256SUMS` file.
 
-**1. Download the binary**
+**1. Download and extract the archive**
 
 ```bash
-# Replace <version> and <os-arch> with your target
-curl -L -o synclet https://github.com/synclet-io/synclet/releases/download/<version>/synclet-<os-arch>
-chmod +x synclet
+# Pick the asset that matches your platform, e.g.
+# synclet-v0.1.0-linux-amd64.tar.gz (Windows archives are .zip)
+tar -xzf synclet-v0.1.0-linux-amd64.tar.gz
+cd synclet-v0.1.0-linux-amd64
 ```
 
 **2. Set required environment variables**
 
 ```bash
+# Only DB_DSN is strictly required for the binary to boot.
 export DB_DSN="postgres://user:password@localhost:5432/synclet?sslmode=disable"
-export AUTH_JWT_SECRET="$(openssl rand -base64 32)"
-export SECRET_ENCRYPTION_KEY="$(openssl rand -base64 32)"
 ```
 
-See the [Configuration](/docs/getting-started/configuration/) page for a full list of environment variables.
+On first run Synclet generates an **ephemeral** `AUTH_JWT_SECRET` and persists a `SECRET_ENCRYPTION_KEY` to `<UserConfigDir>/synclet/encryption.key`. For anything beyond a local trial, set both explicitly (`openssl rand -base64 32` for each) so sessions survive restarts and the encryption key is in your secret manager rather than a single on-disk file.
+
+See [Environment Variables](/docs/reference/environment-variables/) for every variable and its default.
 
 **3. Run database migrations**
 

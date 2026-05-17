@@ -7,13 +7,23 @@ Synclet is configured entirely through environment variables. Set them in your s
 
 ## Required
 
-These must be set before starting the server.
-
 | Variable | Description | Default |
 |---|---|---|
-| `DB_DSN` | PostgreSQL connection string. Example: `postgres://user:pass@host:5432/synclet?sslmode=require` | *none* |
-| `AUTH_JWT_SECRET` | Secret key used to sign authentication tokens. Must be at least 32 bytes. | *none* |
-| `SECRET_ENCRYPTION_KEY` | AES-256 key for encrypting stored connector credentials. Must be exactly 32 bytes, base64-encoded. | *none* |
+| `DB_DSN` | PostgreSQL connection string. Example: `postgres://user:pass@host:5432/synclet?sslmode=require` | *none — required* |
+
+## Auto-defaulted (override in production)
+
+Synclet boots without these but logs a warning and uses ephemeral / on-disk fallbacks. Set explicit values in any environment you care about.
+
+| Variable | Default behavior | Description |
+|---|---|---|
+| `AUTH_JWT_SECRET` | Newly generated on every restart (`WARN` logged). | Token-signing secret. Without an explicit value, all existing sessions are invalidated on each restart. |
+| `SECRET_ENCRYPTION_KEY` | Generated once and persisted to `<UserConfigDir>/synclet/encryption.key`. | AES-256 master key for stored connector credentials. Losing the on-disk file makes existing secrets unrecoverable. |
+| `PUBLIC_HTTP_SERVER_ADDR` | `0.0.0.0:8080` | Dashboard + public API listener. |
+| `INTERNAL_HTTP_SERVER_ADDR` | `0.0.0.0:8081` | Executor RPC listener (distributed mode). Must differ from the public port. |
+| `WATERMILL_TRANSPORT` | `sql` | Internal messaging transport for the transactional outbox. `sql` reuses Postgres via `DB_DSN`. |
+| `WATERMILL_SQL_DRIVER` | `postgres` | SQL driver when `WATERMILL_TRANSPORT=sql`. |
+| `WATERMILL_SQL_CONSUMER_GROUP` | `synclet` | Consumer group identifier for the SQL-backed message bus. |
 
 Generate secure values:
 
@@ -37,10 +47,10 @@ You can generate a `.env` file with all available variables and their defaults b
 
 ## Server
 
+`PUBLIC_HTTP_SERVER_ADDR` and `INTERNAL_HTTP_SERVER_ADDR` are listed in [Auto-defaulted](#auto-defaulted-override-in-production) above.
+
 | Variable | Description | Default |
 |---|---|---|
-| `PUBLIC_HTTP_SERVER_ADDR` | Address and port the public HTTP server binds to. | `0.0.0.0:8080` |
-| `INTERNAL_HTTP_SERVER_ADDR` | Address and port the internal (cluster-only) HTTP server binds to. Used by executors in distributed mode. | `0.0.0.0:8080` |
 | `WORKSPACE_FRONTEND_URL` | Public URL of the frontend. Used for email links (e.g., workspace invitations). | `http://localhost:5173` |
 
 ## Sync Behavior
@@ -56,6 +66,7 @@ You can generate a `.env` file with all available variables and their defaults b
 | `PIPELINE_JOB_WATCHDOG_INTERVAL` | How often the watchdog checks for stale jobs (no heartbeat). | `10s` |
 | `DOCKER_EXECUTOR_JOB_RESOURCE_CLEANUP_INTERVAL` | How often orphaned Docker containers are cleaned up. | `5m` |
 | `DOCKER_EXECUTOR_HEARTBEAT_INTERVAL` | How often the Docker executor sync worker emits a heartbeat. | `5s` |
+| `DOCKER_EXECUTOR_TEMP_DIR_ROOT` | Per-task scratch dir for connector config / catalog / state. Leave empty when running the binary natively (uses the OS temp dir). Set to a host-bind-mounted path when Synclet runs inside a container that talks to the host `docker.sock` — the value must match the host path exactly. | *empty (OS temp dir)* |
 | `PIPELINE_CONNECTOR_TASK_RUNNING_TIMEOUT` | Timeout for an in-progress connector task (check, spec, discover). | `5m` |
 | `PIPELINE_CONNECTOR_TASK_PENDING_TIMEOUT` | Timeout for a connector task that has not started running. | `1m` |
 | `PIPELINE_CONNECTOR_TASK_RETENTION` | How long completed connector task results are kept. | `24h` |

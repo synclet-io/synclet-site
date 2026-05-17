@@ -34,7 +34,7 @@ Once the containers are healthy, open the dashboard at **http://localhost:8080**
 | `SECRET_ENCRYPTION_KEY` | Base64-encoded 32-byte AES-256 key for credentials | Insecure default — must replace |
 | `PUBLIC_HTTP_SERVER_ADDR` | Public HTTP listen address | `0.0.0.0:8080` |
 | `INTERNAL_HTTP_SERVER_ADDR` | Internal HTTP listen address (executor RPC, distributed mode) | `0.0.0.0:8087` |
-| `DOCKER_EXECUTOR_TEMP_DIR_ROOT` | Scratch directory shared with the host for connector containers. Must match the volume mount. | `/tmp/synclet` |
+| `DOCKER_EXECUTOR_TEMP_DIR_ROOT` | Per-task scratch dir (config / catalog / state) under which connector bind mounts are created. **Required when Synclet itself runs in a container with the host docker.sock mounted** — see note below. | `/tmp/synclet` |
 
 Generate production secrets before first start:
 
@@ -59,7 +59,6 @@ docker run -d \
   --name synclet \
   -p 8080:8080 \
   -e DB_DSN="postgres://synclet:password@host.docker.internal:5432/synclet?sslmode=disable" \
-  -e PUBLIC_HTTP_SERVER_ADDR="0.0.0.0:8080" \
   -e AUTH_JWT_SECRET="$(openssl rand -base64 32)" \
   -e SECRET_ENCRYPTION_KEY="$(openssl rand -base64 32)" \
   -e DOCKER_EXECUTOR_TEMP_DIR_ROOT="/tmp/synclet" \
@@ -68,7 +67,12 @@ docker run -d \
   synclet server --standalone
 ```
 
-> **Note:** Synclet needs access to the Docker socket (`/var/run/docker.sock`) to launch Airbyte connector containers during syncs. It also needs a shared scratch directory (`DOCKER_EXECUTOR_TEMP_DIR_ROOT`) bind-mounted to the same path on the host so the host Docker daemon can resolve per-task config/catalog/state bind mounts when spawning connector containers.
+> **Why the docker.sock and the temp dir?**
+> Synclet needs access to the Docker socket (`/var/run/docker.sock`) to launch Airbyte connector containers during syncs.
+>
+> When Synclet itself runs **inside** a container and talks to the host daemon via that socket, every per-task scratch file (the rendered `config.json`, `catalog.json`, and `state.json`) is created by Synclet on the container's filesystem, but the daemon that mounts it into the connector container is on the host. `DOCKER_EXECUTOR_TEMP_DIR_ROOT` is the path inside Synclet's container where those files are written — it **must** be bind-mounted from an identically-named path on the host (e.g. both `/tmp/synclet`) so the host daemon can resolve the bind-mount source.
+>
+> Running the binary natively on the host? Leave `DOCKER_EXECUTOR_TEMP_DIR_ROOT` unset — Synclet falls back to the OS temp dir, which the host daemon can already see.
 >
 > Run `synclet migrate up` once against the same database before starting the server (or front it with a `migrate` sidecar — see the bundled compose file).
 
@@ -87,8 +91,12 @@ You can run Synclet as a plain binary without Docker.
 3. Run migrations and start the server:
 
 ```bash
+# Only DB_DSN is required; everything else has a built-in default.
 export DB_DSN="postgres://synclet:password@localhost:5432/synclet?sslmode=disable"
-export PUBLIC_HTTP_SERVER_ADDR="0.0.0.0:8080"
+
+# Strongly recommended in production — without explicit values these are
+# generated automatically (an ephemeral JWT secret on each restart and a
+# persisted encryption key under <UserConfigDir>/synclet/encryption.key).
 export AUTH_JWT_SECRET="your-jwt-secret"
 export SECRET_ENCRYPTION_KEY="your-encryption-key"
 

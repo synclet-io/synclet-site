@@ -7,20 +7,25 @@ Synclet is configured entirely through environment variables. Set them in your s
 
 ## Required Settings
 
-These variables must be set before Synclet can start.
+`DB_DSN` is the only variable Synclet truly requires — everything else has a built-in default. See [Environment Variables](/docs/reference/environment-variables/) for the full list.
 
 | Variable | Description | Example |
 |---|---|---|
 | `DB_DSN` | PostgreSQL connection string. Must point to a PostgreSQL 16 database. | `postgres://user:pass@localhost:5432/synclet?sslmode=disable` |
-| `AUTH_JWT_SECRET` | Secret key used to sign authentication tokens. Must be at least 32 bytes. | Generate with: `openssl rand -base64 32` |
-| `SECRET_ENCRYPTION_KEY` | Key used to encrypt sensitive configuration values (connector credentials, API keys) at rest. Must be a base64-encoded 32-byte key. | Generate with: `openssl rand -base64 32` |
 
-:::caution
-Keep `AUTH_JWT_SECRET` and `SECRET_ENCRYPTION_KEY` safe. Losing them means existing sessions are invalidated and encrypted credentials become unreadable. Back them up securely.
-:::
+## Production Secrets
+
+Two variables have safe-for-local defaults that you should still override for any real deployment.
+
+| Variable | Default behavior | Why you should set it |
+|---|---|---|
+| `AUTH_JWT_SECRET` | A new 32-byte secret is generated on every startup (logged as `WARN`). | Without an explicit value, **every restart invalidates all sessions** because the signing key changes. |
+| `SECRET_ENCRYPTION_KEY` | Generated once and persisted to `<UserConfigDir>/synclet/encryption.key`. | Losing that file makes every stored connector credential **unrecoverable**. Setting the env var explicitly (from your secret manager) is safer than relying on the on-disk file. |
+
+Generate either with `openssl rand -base64 32`.
 
 :::tip
-Run `synclet generate dotenv` to create a `.env` file with all available variables and their defaults.
+Run `synclet generate dotenv` to dump every available environment variable (with its current default) to a `.env` file — handy as a starting template.
 :::
 
 ## Sync Behavior

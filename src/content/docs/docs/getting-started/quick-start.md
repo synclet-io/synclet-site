@@ -73,20 +73,31 @@ That's it! Your data is now flowing from source to destination.
 
 If you prefer running Synclet without Docker Compose, download the pre-built binary and start it manually.
 
-```bash
-# Download the binary (replace <version> and <os-arch>)
-curl -L -o synclet https://github.com/synclet-io/synclet/releases/download/<version>/synclet-<os-arch>
-chmod +x synclet
+You still need:
 
-# Set required environment variables
+- **PostgreSQL 16** reachable at the `DB_DSN` you configure below (you supply this yourself — the binary does not bundle one).
+- **Docker** on the same host, so Synclet can spawn Airbyte connector containers during syncs.
+
+```bash
+# Download and extract the archive for your platform from
+# https://github.com/synclet-io/synclet/releases
+# (release tags are named `synclet-v<version>`; assets are
+# `synclet-v<version>-<os>-<arch>.tar.gz` plus a `SHA256SUMS` file.)
+tar -xzf synclet-v0.1.0-linux-amd64.tar.gz
+cd synclet-v0.1.0-linux-amd64
+
+# Only DB_DSN is strictly required — Synclet generates a key and picks defaults
+# for the rest at first boot.
 export DB_DSN="postgres://user:password@localhost:5432/synclet?sslmode=disable"
-export AUTH_JWT_SECRET="$(openssl rand -base64 32)"
-export SECRET_ENCRYPTION_KEY="$(openssl rand -base64 32)"
 
 # Run migrations and start the server
 ./synclet migrate up
 ./synclet server --standalone
 ```
+
+On first run, Synclet generates an **ephemeral** `AUTH_JWT_SECRET` (every restart invalidates existing sessions until you set it) and generates a `SECRET_ENCRYPTION_KEY`, persisting it under `<UserConfigDir>/synclet/encryption.key`. **Back that file up** — losing it makes every stored connector credential unrecoverable.
+
+For anything beyond a local trial, set both explicitly (`openssl rand -base64 32` for each) so they survive restarts and image rebuilds. See [Environment Variables](/docs/reference/environment-variables/) for the full list of defaults.
 
 Open [http://localhost:8080](http://localhost:8080) and follow the same steps above to create your first sync.
 
