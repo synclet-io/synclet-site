@@ -80,12 +80,12 @@ If a sync fails mid-way, no data is lost. The next attempt resumes from the **la
 
 ### Credential Encryption
 
-All connector credentials (database passwords, API keys, OAuth tokens) are encrypted at rest using **AES-256-GCM**. The encryption key is configured via the `ENCRYPTION_KEY` environment variable and never stored in the database. See [Configuration](/docs/getting-started/configuration/) for details.
+All connector credentials (database passwords, API keys, OAuth tokens) are encrypted at rest using **AES-256-GCM** with an HKDF-derived data key. The master key is configured via the `SECRET_ENCRYPTION_KEY` environment variable and never stored in the database. See [Configuration](/docs/getting-started/configuration/) for details.
 
 ### Container Isolation
 
-- **Docker mode** — Connector containers are started with **no network access by default**. Synclet communicates with containers through stdin/stdout pipes, not over the network.
-- **Kubernetes mode** — The orchestrator sidecar runs as **non-root** with a **read-only root filesystem**. All containers (orchestrator, source, and destination) have privilege escalation disabled and all Linux capabilities dropped. Network policies can further restrict traffic.
+- **Docker mode** — Synclet communicates with connector containers through stdin/stdout pipes, not over the network. Each connector container is given its own scratch directory (one per task) for config, catalog, and state files.
+- **Kubernetes mode** — The orchestrator sidecar runs as **non-root** with a **read-only root filesystem**. All containers (orchestrator, source, and destination) have privilege escalation disabled and all Linux capabilities dropped (`drop: ["ALL"]`). Network policies can further restrict traffic between pods.
 
 ### OAuth Token Refresh
 

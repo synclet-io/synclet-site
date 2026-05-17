@@ -11,12 +11,12 @@ These variables must be set before Synclet can start.
 
 | Variable | Description | Example |
 |---|---|---|
-| `DSN` | PostgreSQL connection string. Must point to a PostgreSQL 16 database. | `postgres://user:pass@localhost:5432/synclet?sslmode=disable` |
+| `DB_DSN` | PostgreSQL connection string. Must point to a PostgreSQL 16 database. | `postgres://user:pass@localhost:5432/synclet?sslmode=disable` |
 | `AUTH_JWT_SECRET` | Secret key used to sign authentication tokens. Must be at least 32 bytes. | Generate with: `openssl rand -base64 32` |
-| `ENCRYPTION_KEY` | Key used to encrypt sensitive configuration values (connector credentials, API keys) at rest. Must be a base64-encoded 32-byte key. | Generate with: `openssl rand -base64 32` |
+| `SECRET_ENCRYPTION_KEY` | Key used to encrypt sensitive configuration values (connector credentials, API keys) at rest. Must be a base64-encoded 32-byte key. | Generate with: `openssl rand -base64 32` |
 
 :::caution
-Keep `AUTH_JWT_SECRET` and `ENCRYPTION_KEY` safe. Losing them means existing sessions are invalidated and encrypted credentials become unreadable. Back them up securely.
+Keep `AUTH_JWT_SECRET` and `SECRET_ENCRYPTION_KEY` safe. Losing them means existing sessions are invalidated and encrypted credentials become unreadable. Back them up securely.
 :::
 
 :::tip
@@ -29,10 +29,11 @@ Control how Synclet schedules and runs sync jobs.
 
 | Variable | Default | Description |
 |---|---|---|
-| `PIPELINE_JOB_WORKER_INTERVAL` | `1s` | How often the worker checks for pending sync jobs to execute. Lower values reduce latency; higher values reduce database polling. |
+| `DOCKER_EXECUTOR_JOB_WORKER_INTERVAL` | `1s` | How often the Docker executor worker checks for pending sync jobs to execute. Lower values reduce latency; higher values reduce database polling. |
 | `PIPELINE_JOB_SCHEDULER_INTERVAL` | `30s` | How often the scheduler evaluates connection cron schedules and enqueues new jobs. |
-| `PIPELINE_MAX_SYNC_DURATION` | `24h` | Maximum allowed duration for a single sync job. Jobs exceeding this limit are terminated. |
+| `DOCKER_EXECUTOR_MAX_SYNC_DURATION` | `24h` | Maximum allowed duration for a single sync job. Jobs exceeding this limit are terminated. |
 | `PIPELINE_IDLE_TIMEOUT` | `10m` | If a running connector produces no output for this duration, the job is considered stalled and terminated. |
+| `PIPELINE_MAX_CONCURRENT_JOBS` | `10` | Maximum number of sync jobs the pipeline scheduler will start concurrently. |
 
 ## Email Notifications
 

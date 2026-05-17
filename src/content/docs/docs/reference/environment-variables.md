@@ -11,9 +11,9 @@ These must be set before starting the server.
 
 | Variable | Description | Default |
 |---|---|---|
-| `DSN` | PostgreSQL connection string. Example: `postgres://user:pass@host:5432/synclet?sslmode=require` | *none* |
+| `DB_DSN` | PostgreSQL connection string. Example: `postgres://user:pass@host:5432/synclet?sslmode=require` | *none* |
 | `AUTH_JWT_SECRET` | Secret key used to sign authentication tokens. Must be at least 32 bytes. | *none* |
-| `ENCRYPTION_KEY` | AES-256 key for encrypting stored connector credentials. Must be exactly 32 bytes, base64-encoded. | *none* |
+| `SECRET_ENCRYPTION_KEY` | AES-256 key for encrypting stored connector credentials. Must be exactly 32 bytes, base64-encoded. | *none* |
 
 Generate secure values:
 
@@ -21,7 +21,7 @@ Generate secure values:
 # AUTH_JWT_SECRET
 openssl rand -base64 32
 
-# ENCRYPTION_KEY (32 random bytes, base64-encoded)
+# SECRET_ENCRYPTION_KEY (32 random bytes, base64-encoded)
 openssl rand -base64 32
 ```
 
@@ -41,20 +41,23 @@ You can generate a `.env` file with all available variables and their defaults b
 |---|---|---|
 | `PUBLIC_HTTP_SERVER_ADDR` | Address and port the public HTTP server binds to. | `0.0.0.0:8080` |
 | `INTERNAL_HTTP_SERVER_ADDR` | Address and port the internal (cluster-only) HTTP server binds to. Used by executors in distributed mode. | `0.0.0.0:8080` |
-| `FRONTEND_URL` | Public URL of the frontend. Used for email links (e.g., workspace invitations). | `http://localhost:5173` |
+| `WORKSPACE_FRONTEND_URL` | Public URL of the frontend. Used for email links (e.g., workspace invitations). | `http://localhost:5173` |
 
 ## Sync Behavior
 
 | Variable | Description | Default |
 |---|---|---|
-| `PIPELINE_JOB_WORKER_INTERVAL` | How often workers poll for pending jobs. | `1s` |
+| `DOCKER_EXECUTOR_JOB_WORKER_INTERVAL` | How often the Docker executor worker polls for pending sync jobs. | `1s` |
 | `PIPELINE_JOB_SCHEDULER_INTERVAL` | How often the scheduler evaluates pipeline cron schedules. | `30s` |
-| `PIPELINE_MAX_SYNC_DURATION` | Maximum time a single sync can run before being killed. | `24h` |
-| `PIPELINE_MAX_CONCURRENT_JOBS` | Maximum number of sync jobs running concurrently. | `10` |
+| `DOCKER_EXECUTOR_MAX_SYNC_DURATION` | Maximum time a single sync can run before being killed (Docker executor). | `24h` |
+| `PIPELINE_MAX_CONCURRENT_JOBS` | Maximum number of sync jobs the pipeline scheduler will start concurrently. | `10` |
+| `DOCKER_EXECUTOR_MAX_CONCURRENT_JOBS` | Maximum number of sync jobs the Docker executor processes concurrently. | `5` |
 | `PIPELINE_IDLE_TIMEOUT` | Kill a sync if no data has been emitted for this duration. Prevents stuck connectors from running indefinitely. | `10m` |
 | `PIPELINE_JOB_WATCHDOG_INTERVAL` | How often the watchdog checks for stale jobs (no heartbeat). | `10s` |
-| `DOCKER_EXECUTOR_JOB_CLEANUP_INTERVAL` | How often orphaned Docker containers are cleaned up. | `5m` |
-| `PIPELINE_CONNECTOR_TASK_TIMEOUT` | Timeout for connector tasks (check, spec, discover). | `5m` |
+| `DOCKER_EXECUTOR_JOB_RESOURCE_CLEANUP_INTERVAL` | How often orphaned Docker containers are cleaned up. | `5m` |
+| `DOCKER_EXECUTOR_HEARTBEAT_INTERVAL` | How often the Docker executor sync worker emits a heartbeat. | `5s` |
+| `PIPELINE_CONNECTOR_TASK_RUNNING_TIMEOUT` | Timeout for an in-progress connector task (check, spec, discover). | `5m` |
+| `PIPELINE_CONNECTOR_TASK_PENDING_TIMEOUT` | Timeout for a connector task that has not started running. | `1m` |
 | `PIPELINE_CONNECTOR_TASK_RETENTION` | How long completed connector task results are kept. | `24h` |
 
 ### Resource Defaults
@@ -89,13 +92,14 @@ Required if you want Synclet to send email notifications (alerts, invitations). 
 | `AUTH_SECURE_COOKIES` | Set to `true` to mark authentication cookies as `Secure` (requires HTTPS). | `false` |
 | `AUTH_ACCESS_TOKEN_TTL` | Lifetime of access tokens. | `15m` |
 | `AUTH_REFRESH_TOKEN_TTL` | Lifetime of refresh tokens. | `168h` |
+| `AUTH_MIN_PASSWORD_LENGTH` | Minimum length for new passwords. | `8` |
 
 ## Workspaces
 
 | Variable | Description | Default |
 |---|---|---|
-| `WORKSPACES_MODE` | Workspace mode. `single` creates one default workspace for all users. `multi` allows multiple workspaces. | `single` |
-| `INVITE_TTL` | How long workspace invitation links remain valid. | `168h` |
+| `WORKSPACE_MODE` | Workspace mode. `single` creates one default workspace and auto-joins every user to it. `multi` allows multiple workspaces with explicit membership. | `single` |
+| `WORKSPACE_INVITE_TTL` | How long workspace invitation links remain valid. | `168h` |
 
 ## OIDC Providers
 
@@ -159,7 +163,7 @@ These are only needed when running executors in distributed (RPC) mode, where th
 
 | Variable | Description | Default |
 |---|---|---|
-| `ENCRYPTION_KEY_PREVIOUS` | Previous encryption key (base64-encoded). When set, Synclet can decrypt credentials encrypted with the old key and re-encrypt them with the current key. | *none* |
+| `SECRET_ENCRYPTION_KEY_PREVIOUS` | Previous encryption key (base64-encoded). When set, Synclet can decrypt credentials encrypted with the old key and re-encrypt them with the current key. | *none* |
 
 ## Generating Secrets
 
@@ -177,4 +181,4 @@ openssl rand -base64 32
 
 - Never commit secrets to version control.
 - Use a secret manager (HashiCorp Vault, AWS Secrets Manager, Kubernetes Secrets, Doppler) in production.
-- Rotate secrets periodically. After rotating `AUTH_JWT_SECRET`, all users will need to re-authenticate. After rotating `ENCRYPTION_KEY`, set the old key as `ENCRYPTION_KEY_PREVIOUS` so existing credentials can be re-encrypted transparently.
+- Rotate secrets periodically. After rotating `AUTH_JWT_SECRET`, all users will need to re-authenticate. After rotating `SECRET_ENCRYPTION_KEY`, set the old key as `SECRET_ENCRYPTION_KEY_PREVIOUS` so existing credentials can be re-encrypted transparently.

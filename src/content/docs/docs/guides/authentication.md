@@ -11,7 +11,7 @@ Email and password is the default authentication method. When you first access S
 
 1. Open the Synclet web UI in your browser.
 2. Click **Create account**.
-3. Enter your email address, your name, and choose a password (minimum 12 characters).
+3. Enter your email address, your name, and choose a password (minimum 8 characters by default — configurable via `AUTH_MIN_PASSWORD_LENGTH`).
 4. Submit the form. You are logged in and can start creating workspaces.
 
 The first user to register is automatically assigned the Admin role on the default workspace.

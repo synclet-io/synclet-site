@@ -31,7 +31,7 @@ The connector connected successfully but could not read the source schema.
 
 The sync exceeded the configured time limit.
 
-- **Increase `PIPELINE_MAX_SYNC_DURATION`** -- Default is `24h`. For very large initial syncs, you may need to raise this. See [Environment Variables](/docs/reference/environment-variables/).
+- **Increase `DOCKER_EXECUTOR_MAX_SYNC_DURATION`** -- Default is `24h`. For very large initial syncs, you may need to raise this. See [Environment Variables](/docs/reference/environment-variables/).
 - **Increase `PIPELINE_IDLE_TIMEOUT`** -- Default is `10m`. Some sources are slow to emit data (e.g., API rate limits). Increase if the connector is working but pauses between batches.
 - **Check source performance** -- Slow queries on the source database can cause timeouts. Consider adding indexes or reducing the number of streams.
 
@@ -49,7 +49,7 @@ The connector container could not be launched.
 
 Synclet cannot reach PostgreSQL on startup.
 
-- **Connection string format** -- Verify `DB_DSN` follows the format: `postgres://user:password@host:port/dbname?sslmode=require`
+- **Connection string format** -- Verify `DB_DSN` follows the format: `postgres://user:password@host:port/dbname?sslmode=require`. (`DB_DSN` is the name expected by the application; older notes that reference `DSN` are out of date.)
 - **PostgreSQL is running** -- Check with `pg_isready -h host -p port`.
 - **Version** -- Synclet requires PostgreSQL **16 or later**. Check with `SELECT version();`.
 - **Firewall / security groups** -- Ensure the Synclet host can reach the database port.
@@ -120,7 +120,7 @@ When something is not working, follow these steps in order:
 
 ## Getting Help
 
-If you cannot resolve the issue, open a [GitHub Issue](https://github.com/synclet/synclet/issues). Please include:
+If you cannot resolve the issue, open a [GitHub Issue](https://github.com/synclet-io/synclet/issues). Please include:
 
 - Synclet version (`synclet --version`)
 - Deployment method (Docker, Kubernetes, binary)

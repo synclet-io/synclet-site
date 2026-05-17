@@ -96,10 +96,6 @@ Synclet captures logs from each connector during a sync. Logs are available per 
 
 Logs can be filtered by level to focus on warnings and errors during troubleshooting.
 
-:::tip
-If `PIPELINE_LOG_STORE_DIR` is configured, logs are stored on disk instead of the database. This is recommended for high-volume workloads to keep the database lean. See [Configuration](/docs/getting-started/configuration/) for details.
-:::
-
 ## Prometheus Metrics
 
 Synclet exposes a Prometheus-compatible metrics endpoint for integration with external monitoring systems like Grafana.
@@ -154,7 +150,7 @@ Synclet provides a health check endpoint for load balancers and orchestration to
 GET /health
 ```
 
-Returns `200 OK` when the service is healthy and connected to the database. Returns `503 Service Unavailable` if the database connection is down.
+Returns `200 OK` when all registered health checks pass (currently just the database). Returns `503 Service Unavailable` if any check fails. The response body is a JSON object with the live state and per-check errors.
 
 Example:
 
@@ -163,7 +159,7 @@ curl -s http://localhost:8080/health
 ```
 
 ```json
-{"status": "ok"}
+{"alive":true,"checkErrors":{"gorm":null}}
 ```
 
 ## Next Steps

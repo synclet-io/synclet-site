@@ -27,7 +27,7 @@ Synclet can pull data from any Airbyte-compatible source. Some commonly used one
 - **Analytics** — Google Analytics, Facebook Ads, LinkedIn Ads
 - **Developer Tools** — GitHub, GitLab, Notion, Slack
 
-Browse the full catalog from **Settings > Repositories** in the Synclet dashboard.
+Browse the full catalog from **Settings > Connectors** in the Synclet dashboard.
 
 ## Popular Destinations
 
@@ -40,7 +40,7 @@ Browse the full catalog from **Settings > Repositories** in the Synclet dashboar
 
 ### Step 1: Configure a Repository
 
-Synclet ships with the **default Airbyte registry** pre-configured, so you can use any public Airbyte connector immediately. To add a private or custom registry, go to **Settings > Repositories** and add the registry URL.
+Synclet ships with the **default Airbyte registry** pre-configured, so you can use any public Airbyte connector immediately. To add a private or custom registry, go to **Settings > Connectors > Repositories** and add the registry URL.
 
 ### Step 2: Create a Source or Destination
 
@@ -69,15 +69,15 @@ See the [Stream Configuration](/docs/guides/stream-configuration/) guide for det
 
 ## Native Go Connectors
 
-In addition to Docker-based Airbyte connectors, Synclet includes a set of **native Go connectors** compiled directly into the binary. These run in-process with no Docker overhead, making them ideal for high-frequency syncs or environments where Docker is not available.
+In addition to community Airbyte connectors, Synclet maintains a set of **native Go connectors** built with `airbyte-go-sdk`. They speak the same Airbyte protocol over stdin/stdout and ship as their own container images alongside the Synclet repo.
 
-| Connector | Type | Description |
+| Connector | Type | Image directory |
 |---|---|---|
-| Google Sheets | Source & Destination | Read from and write to Google Sheets |
-| MySQL | Source | Read from MySQL databases |
-| BigQuery | Destination | Write to Google BigQuery |
+| Google Sheets | Source & Destination | `connectors/source-google-sheets/`, `connectors/destination-google-sheets/` |
+| MySQL | Source | `connectors/source-mysql/` |
+| BigQuery | Destination | `connectors/destination-bigquery/` |
 
-Native connectors implement the same Airbyte protocol — they appear in the connector catalog alongside Docker-based connectors and are configured the same way. Synclet automatically uses the native implementation when one is available.
+Native connectors appear in the catalog alongside Docker-based community connectors and are configured the same way — the difference is that the implementation is Go (with smaller image size and faster cold starts) instead of Python or Java.
 
 ## Container Behavior
 

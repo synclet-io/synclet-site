@@ -34,7 +34,7 @@ Yes. Any Docker image that implements the [Airbyte connector protocol](https://d
 
 ### How are credentials stored?
 
-All connector credentials (database passwords, API keys, OAuth tokens) are encrypted at rest using **AES-256-GCM**. The encryption key is your `ENCRYPTION_KEY` environment variable. Without this key, stored credentials cannot be decrypted.
+All connector credentials (database passwords, API keys, OAuth tokens) are encrypted at rest using **AES-256-GCM** with an HKDF-derived data key. The master key is provided via the `SECRET_ENCRYPTION_KEY` environment variable. Without this key, stored credentials cannot be decrypted.
 
 See [Environment Variables](/docs/reference/environment-variables/) for how to generate a secure key.
 

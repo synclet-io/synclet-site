@@ -16,7 +16,7 @@ Generate cryptographically secure secrets. Never use default or weak values.
 export AUTH_JWT_SECRET="$(openssl rand -base64 32)"
 
 # AES-256 encryption key for stored credentials (must be 32 bytes, base64-encoded)
-export ENCRYPTION_KEY="$(openssl rand -base64 32)"
+export SECRET_ENCRYPTION_KEY="$(openssl rand -base64 32)"
 ```
 
 Store secrets in a secret manager (HashiCorp Vault, AWS Secrets Manager, Kubernetes Secrets) rather than plain text files.
@@ -57,7 +57,7 @@ Run Synclet and connector containers on an isolated Docker network. Connectors s
 ### Connection string
 
 ```bash
-export DSN="postgres://synclet:password@db.example.com:5432/synclet?sslmode=require"
+export DB_DSN="postgres://synclet:password@db.example.com:5432/synclet?sslmode=require"
 ```
 
 Always use `sslmode=require` or `sslmode=verify-full` in production.
@@ -101,7 +101,7 @@ Recommended alerts:
 
 - Health endpoint returns non-200 for more than 2 minutes.
 - Sync failure rate exceeds threshold.
-- Sync duration exceeds `MAX_SYNC_DURATION`.
+- Sync duration approaches `DOCKER_EXECUTOR_MAX_SYNC_DURATION`.
 
 ## Backup Strategy
 
@@ -116,10 +116,11 @@ Automate all of the above and **test restores regularly**. A backup you have nev
 
 | Variable | Description | Default | Guidance |
 |---|---|---|---|
-| `PIPELINE_JOB_WORKER_INTERVAL` | How often workers poll for new jobs | `1s` | Lower = faster pickup, higher CPU. 1-5 s is typical. |
+| `DOCKER_EXECUTOR_JOB_WORKER_INTERVAL` | How often the Docker executor polls for new jobs | `1s` | Lower = faster pickup, higher CPU. 1-5 s is typical. |
 | `PIPELINE_JOB_SCHEDULER_INTERVAL` | How often the scheduler evaluates cron triggers | `30s` | 15-60 s depending on schedule granularity. |
-| `PIPELINE_MAX_SYNC_DURATION` | Hard timeout for a single sync | `24h` | Set based on your largest dataset. |
+| `DOCKER_EXECUTOR_MAX_SYNC_DURATION` | Hard timeout for a single sync (Docker executor) | `24h` | Set based on your largest dataset. |
 | `PIPELINE_IDLE_TIMEOUT` | Kill a sync if no data flows for this long | `10m` | Increase for slow sources. |
+| `PIPELINE_MAX_CONCURRENT_JOBS` | Maximum number of sync jobs the scheduler will start in parallel | `10` | Increase for larger hosts; the executor independently caps in-flight work. |
 
 ### Container resource limits
 

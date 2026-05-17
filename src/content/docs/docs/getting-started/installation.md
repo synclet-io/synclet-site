@@ -19,7 +19,7 @@ The fastest way to get Synclet running. This setup includes PostgreSQL, Synclet,
 
 ```bash
 # Clone the repository
-git clone https://github.com/syncletdev/synclet.git
+git clone https://github.com/synclet-io/synclet.git
 cd synclet
 
 # Start all services in the background
@@ -28,30 +28,30 @@ docker compose up -d
 
 This starts:
 
-- **PostgreSQL 16** on port 5432
+- **PostgreSQL 16** on port 5432 (mapped to host port 5437)
 - **Synclet** on port 8080 (API + dashboard)
-- Automatic database migrations on first startup
+- Automatic database migrations on first startup (via the `migrate` service)
 
 Open your browser and navigate to [http://localhost:8080](http://localhost:8080) to access the dashboard. You will be prompted to create your first admin account.
 
 ## Pre-built Binary
 
-Download a pre-compiled binary from the [GitHub Releases](https://github.com/syncletdev/synclet/releases) page and run it directly.
+Download a pre-compiled binary from the [GitHub Releases](https://github.com/synclet-io/synclet/releases) page and run it directly.
 
 **1. Download the binary**
 
 ```bash
 # Replace <version> and <os-arch> with your target
-curl -L -o synclet https://github.com/syncletdev/synclet/releases/download/<version>/synclet-<os-arch>
+curl -L -o synclet https://github.com/synclet-io/synclet/releases/download/<version>/synclet-<os-arch>
 chmod +x synclet
 ```
 
 **2. Set required environment variables**
 
 ```bash
-export DSN="postgres://user:password@localhost:5432/synclet?sslmode=disable"
+export DB_DSN="postgres://user:password@localhost:5432/synclet?sslmode=disable"
 export AUTH_JWT_SECRET="$(openssl rand -base64 32)"
-export ENCRYPTION_KEY="$(openssl rand -base64 32)"
+export SECRET_ENCRYPTION_KEY="$(openssl rand -base64 32)"
 ```
 
 See the [Configuration](/docs/getting-started/configuration/) page for a full list of environment variables.
@@ -76,7 +76,7 @@ If you prefer to compile Synclet yourself, you need **Go 1.25+** installed.
 
 ```bash
 # Clone the repository
-git clone https://github.com/syncletdev/synclet.git
+git clone https://github.com/synclet-io/synclet.git
 cd synclet
 
 # Build the binary

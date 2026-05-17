@@ -23,7 +23,7 @@ Synclet sends notifications to Slack using incoming webhooks.
 1. In your Slack workspace, go to **Apps > Incoming Webhooks** (or visit [api.slack.com/messaging/webhooks](https://api.slack.com/messaging/webhooks)).
 2. Create a new webhook and select the channel where notifications should appear.
 3. Copy the webhook URL (it looks like `https://hooks.slack.com/services/T.../B.../xxx`).
-4. In Synclet, go to **Settings > Notification Channels**.
+4. In Synclet, go to **Settings > Notifications**.
 5. Click **Add Channel**, select **Slack**, and paste the webhook URL.
 6. Give the channel a name (e.g., `#data-alerts`) and click **Save**.
 
@@ -53,7 +53,7 @@ NOTIFY_SMTP_FROM="noreply@yourcompany.com"
 
 Then create an email notification channel:
 
-1. Go to **Settings > Notification Channels**.
+1. Go to **Settings > Notifications**.
 2. Click **Add Channel**, select **Email**.
 3. Enter the recipient email addresses (comma-separated for multiple recipients).
 4. Give the channel a name (e.g., `Data Team Email`) and click **Save**.
@@ -74,7 +74,7 @@ Synclet sends notifications to Telegram chats or groups via a bot.
 4. Get the chat ID:
    - For groups, add the bot and send a message. Then visit `https://api.telegram.org/bot<TOKEN>/getUpdates` to find the chat ID.
    - For direct chats, send a message to the bot and check `getUpdates` for your chat ID.
-5. In Synclet, go to **Settings > Notification Channels**.
+5. In Synclet, go to **Settings > Notifications**.
 6. Click **Add Channel**, select **Telegram**.
 7. Enter the bot token and chat ID.
 8. Give the channel a name (e.g., `Telegram Alerts`) and click **Save**.
@@ -87,7 +87,7 @@ For group chats, make sure the bot has permission to send messages. In supergrou
 
 After creating notification channels, create rules to link them to connections:
 
-1. Go to **Settings > Notification Channels** and select a channel.
+1. Go to **Settings > Notifications** and select a channel.
 2. Click **Add Rule**.
 3. Choose a **condition** (on failure, on consecutive failures, or on zero records).
 4. Optionally scope the rule to a specific **connection**. If no connection is selected, the rule applies to all connections in the workspace.

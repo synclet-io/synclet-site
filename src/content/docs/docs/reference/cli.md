@@ -35,14 +35,14 @@ Synclet is distributed as a single binary. All operations — running the server
 # Start in standalone mode (API + jobs + executor in one process)
 DB_DSN=postgres://user:pass@localhost:5432/synclet \
 AUTH_JWT_SECRET=your-secret \
-ENCRYPTION_KEY=your-base64-key \
+SECRET_ENCRYPTION_KEY=your-base64-key \
 synclet server --standalone
 
 # Load config from a .env file
 synclet server --standalone --dotenv .env
 ```
 
-In standalone mode, the executor is automatically selected: Docker on regular hosts, Kubernetes when running inside a K8s pod.
+In standalone mode, the executor is automatically selected: Docker on regular hosts, Kubernetes when running inside a K8s pod (detected via the in-cluster environment).
 
 The public HTTP server binds to `0.0.0.0:8080` by default (configurable via `PUBLIC_HTTP_SERVER_ADDR`). See [Environment Variables](/docs/reference/environment-variables/) for the full list of configuration options.
 

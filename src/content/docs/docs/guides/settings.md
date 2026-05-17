@@ -61,9 +61,9 @@ The Airbyte connector registry provides access to 300+ pre-built source and dest
 
 If you maintain custom connectors or use a private registry:
 
-1. Go to **Settings > Connector Repositories**.
+1. Go to **Settings > Connectors** and switch to the **Repositories** tab.
 2. Click **Add Repository**.
-3. Enter the repository URL and any required authentication details.
+3. Pick a repository preset (or choose a custom URL), enter the URL, and provide any required authentication header.
 4. Click **Save**.
 
 Custom connectors appear alongside default connectors when adding sources and destinations. Custom registries are checked in addition to the default registry.
@@ -72,14 +72,16 @@ Custom connectors appear alongside default connectors when adding sources and de
 Custom repositories are useful for organizations that build proprietary connectors for internal systems or need to pin specific connector versions for stability.
 :::
 
-## Notification Channels
+## Notifications
 
-Manage your workspace's notification channels from **Settings > Notification Channels**. From here you can:
+Manage your workspace's notification channels and rules from **Settings > Notifications**. From here you can:
 
 - View all configured channels (Slack, Email, Telegram).
-- Add new channels.
-- Edit or delete existing channels.
+- Add, edit, or delete channels.
 - Test a channel to verify it works.
+- Create notification rules that link channels to connections and events.
+
+For outbound HTTP integrations (e.g., calling external systems on sync events), see **Settings > Webhooks**.
 
 For detailed setup instructions, see the [Notifications](/docs/guides/notifications/) guide.
 

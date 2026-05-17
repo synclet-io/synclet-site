@@ -11,7 +11,7 @@ The fastest path from zero to a working sync.
 
 ```bash
 # Clone the repository
-git clone https://github.com/syncletdev/synclet.git
+git clone https://github.com/synclet-io/synclet.git
 cd synclet
 
 # Start Synclet and PostgreSQL
@@ -75,17 +75,17 @@ If you prefer running Synclet without Docker Compose, download the pre-built bin
 
 ```bash
 # Download the binary (replace <version> and <os-arch>)
-curl -L -o synclet https://github.com/syncletdev/synclet/releases/download/<version>/synclet-<os-arch>
+curl -L -o synclet https://github.com/synclet-io/synclet/releases/download/<version>/synclet-<os-arch>
 chmod +x synclet
 
 # Set required environment variables
-export DSN="postgres://user:password@localhost:5432/synclet?sslmode=disable"
+export DB_DSN="postgres://user:password@localhost:5432/synclet?sslmode=disable"
 export AUTH_JWT_SECRET="$(openssl rand -base64 32)"
-export ENCRYPTION_KEY="$(openssl rand -base64 32)"
+export SECRET_ENCRYPTION_KEY="$(openssl rand -base64 32)"
 
 # Run migrations and start the server
 ./synclet migrate up
-./synclet server
+./synclet server --standalone
 ```
 
 Open [http://localhost:8080](http://localhost:8080) and follow the same steps above to create your first sync.

@@ -30,10 +30,12 @@ A minimal `values.yaml`:
 
 ```yaml
 auth:
-  jwtSecret: "your-jwt-secret"
+  jwtSecret: "your-jwt-secret"           # min. 32 bytes
 encryption:
-  key: "your-base64-encoded-32-byte-key"
+  key: "your-base64-encoded-32-byte-key" # base64(32 bytes)
 ```
+
+These map to the `AUTH_JWT_SECRET` and `SECRET_ENCRYPTION_KEY` environment variables. Generate both with `openssl rand -base64 32`.
 
 The chart includes a built-in PostgreSQL by default. To use an external database, disable the built-in one and configure `externalDatabase`:
 
@@ -73,7 +75,7 @@ helm upgrade synclet oci://ghcr.io/synclet-io/charts/synclet -f values.yaml -n s
 
 ### Standalone mode
 
-A single pod runs the API server, scheduler, and sync workers together. This is the simplest setup and works well for small-to-medium workloads.
+A single pod runs the API server, scheduler, and sync executor together. This is the simplest setup and works well for small-to-medium workloads.
 
 ```yaml
 mode: standalone
@@ -81,7 +83,7 @@ server:
   replicaCount: 1
 ```
 
-Connectors run as Docker containers inside the Synclet pod (requires Docker-in-Docker or a mounted socket).
+When Synclet detects it is running inside Kubernetes, it automatically selects the Kubernetes executor: every sync runs as its own `batchv1.Job` (orchestrator + source + destination containers) rather than via the local Docker daemon. No Docker-in-Docker is required.
 
 ### Distributed mode
 

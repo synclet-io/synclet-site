@@ -28,7 +28,7 @@ Each connection maintains its own sync state, job history, and health status.
 6. **Configure retry policy** — Set the maximum number of attempts and the retry delay (in minutes) for failed syncs.
 7. **Save** — Review your configuration and click **Save**. The connection is created in an active, enabled state.
 
-To receive alerts when syncs fail, create notification rules under **Settings > Notification Channels**. See [Notifications](/docs/guides/notifications/).
+To receive alerts when syncs fail, create notification rules under **Settings > Notifications**. See [Notifications](/docs/guides/notifications/).
 
 :::tip
 Start with a manual schedule and run a test sync before enabling a cron schedule. This lets you verify the configuration without waiting for the next scheduled run.
